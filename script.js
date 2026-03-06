@@ -79,7 +79,7 @@ document.querySelectorAll('.nav-links a').forEach(function (a) {
   var ctx = canvas.getContext('2d');
 
   var M = 0.04, P = 0.4, T = 0.18;
-  var PARTICLE_COUNT = 500;
+  var PARTICLE_COUNT = 700;
   var TRAIL_LEN = 18;
 
   var dpr, rW, rH;
