@@ -13,12 +13,12 @@ Thumbs.db
 *.swp
 *~
 
-# Python (if any tooling)
+# Python
 __pycache__/
 *.pyc
 .venv/
 
-# Node (if any tooling)
+# Node
 node_modules/
 
 # Build artifacts
@@ -28,5 +28,12 @@ site/
 # Reference code (large, not for commit)
 ref_codes/
 
-# PDF source (too large for git)
+# PDF source
 *.pdf
+
+# Agent rules & project docs (not part of the website)
+CLAUDE.md
+docs/
+
+# Claude internal
+.claude/
