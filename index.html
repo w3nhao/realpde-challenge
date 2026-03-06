@@ -17,319 +17,15 @@
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <style>
-    /* ===================== DESIGN TOKENS ===================== */
-    :root {
-      --lavender-main: #D8D4E6;
-      --lavender-light: #EBE9F5;
-      --lavender-dark: #B6B1CA;
-      --surface: #F9F9FC;
-      --slate: #696285;
-      --carbon: #1D1D1F;
-      --platinum: #F5F5F7;
-      --mint-light: #BFD9CF;
-      --mint-mid: #9FC2B4;
-      --mint-dark: #4E776B;
-      --accent: #6C5CE7;
-      --accent-light: #A29BFE;
-      --gold: #D4A853;
-      --silver: #A8A8A8;
-      --bronze: #CD7F32;
-      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-serif: "Fraunces", ui-serif, Georgia, serif;
-      --max-w: 1100px;
-      --spacing-xl: 100px;
-      --spacing-lg: 64px;
-      --spacing-md: 40px;
-      --spacing-sm: 24px;
-    }
-
-    /* ===================== RESET & BASE ===================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font-sans);
-      color: var(--carbon);
-      background: var(--surface);
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
-    h1, h2, h3, h4 {
-      font-family: var(--font-serif);
-      font-optical-sizing: auto;
-      line-height: 1.25;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    img { max-width: 100%; display: block; }
-
-    /* ===================== NAVBAR ===================== */
-    .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(249,249,252,.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--lavender-main);
-      height: 56px;
-      display: flex; align-items: center;
-    }
-    .navbar-inner {
-      max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-    }
-    .navbar-brand {
-      font-family: var(--font-serif); font-weight: 700; font-size: 1.15rem;
-      color: var(--carbon); text-decoration: none; white-space: nowrap;
-    }
-    .navbar-brand span { color: var(--accent); }
-    .nav-links { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-    .nav-links a {
-      font-size: 0.82rem; font-weight: 500; color: var(--slate);
-      padding: 6px 10px; border-radius: 6px; transition: all .15s; text-decoration: none;
-    }
-    .nav-links a:hover { background: var(--lavender-light); color: var(--carbon); }
-    .nav-links .btn-nav {
-      background: var(--accent); color: #fff; padding: 6px 14px;
-      border-radius: 8px; font-weight: 600;
-    }
-    .nav-links .btn-nav:hover { background: #5a4bd4; }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-    .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--carbon); margin: 4px 0; border-radius: 2px; transition: .2s; }
-
-    /* ===================== HERO ===================== */
-    .hero {
-      padding: calc(56px + var(--spacing-xl)) 24px var(--spacing-xl);
-      text-align: center;
-      background: linear-gradient(160deg, var(--lavender-light) 0%, var(--surface) 50%, var(--mint-light) 100%);
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(108,92,231,.06) 0%, transparent 70%);
-    }
-    .hero-inner { position: relative; max-width: var(--max-w); margin: 0 auto; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(108,92,231,.1); color: var(--accent);
-      padding: 6px 16px; border-radius: 20px;
-      font-size: 0.82rem; font-weight: 600; margin-bottom: 20px;
-      border: 1px solid rgba(108,92,231,.15);
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
-      margin-bottom: 16px; letter-spacing: -0.02em;
-    }
-    .hero h1 .accent { color: var(--accent); }
-    .hero-sub {
-      font-size: clamp(1rem, 2.2vw, 1.2rem); color: var(--slate);
-      max-width: 700px; margin: 0 auto 32px; line-height: 1.7;
-    }
-
-    /* Countdown */
-    .countdown-wrap {
-      display: flex; justify-content: center; gap: 12px; margin-bottom: 32px; flex-wrap: wrap;
-    }
-    .countdown-item {
-      background: white; border-radius: 12px; padding: 12px 16px; min-width: 80px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--lavender-light);
-    }
-    .countdown-num {
-      font-family: var(--font-serif); font-size: 2rem; font-weight: 700;
-      color: var(--accent); line-height: 1;
-    }
-    .countdown-label { font-size: 0.72rem; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-top: 4px; }
-    .countdown-target {
-      font-size: 0.82rem; color: var(--slate); margin-bottom: 8px; font-weight: 500;
-    }
-
-    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border-radius: 10px; font-weight: 600;
-      font-size: 0.95rem; transition: all .2s; text-decoration: none; border: none; cursor: pointer;
-    }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #5a4bd4; text-decoration: none; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(108,92,231,.25); }
-    .btn-outline { background: white; color: var(--carbon); border: 1.5px solid var(--lavender-dark); }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
-
-    /* ===================== SECTIONS ===================== */
-    .section { padding: var(--spacing-lg) 24px; }
-    .section-inner { max-width: var(--max-w); margin: 0 auto; }
-    .section-alt { background: white; }
-    .section-title {
-      font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: 8px;
-      text-align: center;
-    }
-    .section-subtitle {
-      color: var(--slate); text-align: center; margin-bottom: var(--spacing-md);
-      max-width: 650px; margin-left: auto; margin-right: auto; font-size: 0.95rem;
-    }
-
-    /* ===================== KEY FEATURES / INFO CARDS ===================== */
-    .features-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .feature-card {
-      background: white; border-radius: 14px; padding: 28px;
-      border: 1px solid var(--lavender-light);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .feature-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.06); }
-    .feature-icon {
-      width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; margin-bottom: 14px;
-    }
-    .feature-icon--purple { background: rgba(108,92,231,.1); color: var(--accent); }
-    .feature-icon--mint { background: rgba(78,119,107,.1); color: var(--mint-dark); }
-    .feature-icon--gold { background: rgba(212,168,83,.12); color: #b8922e; }
-    .feature-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-    .feature-card p { font-size: 0.88rem; color: var(--slate); line-height: 1.6; }
-
-    /* ===================== TRACKS ===================== */
-    .tracks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .track-card {
-      background: white; border-radius: 16px; padding: 32px;
-      border: 1px solid var(--lavender-light); position: relative; overflow: hidden;
-    }
-    .track-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-    }
-    .track-card--sim2real::before { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
-    .track-card--lttta::before { background: linear-gradient(90deg, var(--mint-dark), var(--mint-mid)); }
-    .track-tag {
-      display: inline-block; font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .08em;
-      padding: 4px 10px; border-radius: 6px; margin-bottom: 14px;
-    }
-    .track-tag--purple { background: rgba(108,92,231,.1); color: var(--accent); }
-    .track-tag--mint { background: rgba(78,119,107,.1); color: var(--mint-dark); }
-    .track-card h3 { font-size: 1.25rem; margin-bottom: 10px; }
-    .track-card p { font-size: 0.88rem; color: var(--slate); line-height: 1.65; }
-    .track-card ul { margin-top: 12px; padding-left: 18px; font-size: 0.88rem; color: var(--slate); }
-    .track-card ul li { margin-bottom: 6px; }
-
-    /* ===================== TIMELINE ===================== */
-    .timeline { position: relative; padding-left: 32px; }
-    .timeline::before {
-      content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px;
-      width: 2px; background: var(--lavender-main); border-radius: 1px;
-    }
-    .timeline-item { position: relative; margin-bottom: 28px; }
-    .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-dot {
-      position: absolute; left: -32px; top: 4px;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: white; border: 2.5px solid var(--accent);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .timeline-dot--done { background: var(--accent); border-color: var(--accent); }
-    .timeline-dot--done::after { content: '✓'; color: white; font-size: 0.7rem; font-weight: 700; }
-    .timeline-dot--active { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(108,92,231,.15); }
-    .timeline-date { font-size: 0.78rem; font-weight: 600; color: var(--accent); margin-bottom: 2px; }
-    .timeline-title { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-    .timeline-desc { font-size: 0.85rem; color: var(--slate); }
-
-    /* ===================== PRIZES ===================== */
-    .prizes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center; }
-    .prize-card {
-      background: white; border-radius: 14px; padding: 28px 20px;
-      border: 1px solid var(--lavender-light); transition: transform .2s;
-    }
-    .prize-card:hover { transform: translateY(-2px); }
-    .prize-medal { font-size: 2.5rem; margin-bottom: 8px; }
-    .prize-place { font-family: var(--font-serif); font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
-    .prize-amount {
-      font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .prize-amount--gold { color: var(--gold); }
-    .prize-amount--silver { color: var(--silver); }
-    .prize-amount--bronze { color: var(--bronze); }
-    .prize-note { font-size: 0.82rem; color: var(--slate); }
-
-    /* ===================== METRICS OVERVIEW ===================== */
-    .metrics-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-    .metric-item {
-      background: white; border-radius: 12px; padding: 20px;
-      border: 1px solid var(--lavender-light);
-    }
-    .metric-item h4 { font-size: 0.95rem; margin-bottom: 6px; }
-    .metric-item p { font-size: 0.82rem; color: var(--slate); }
-
-    /* ===================== RULES TABLE ===================== */
-    .rules-table {
-      width: 100%; border-collapse: collapse; font-size: 0.88rem;
-      background: white; border-radius: 12px; overflow: hidden;
-      border: 1px solid var(--lavender-light);
-    }
-    .rules-table th {
-      background: var(--lavender-light); text-align: left; padding: 12px 16px;
-      font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: .04em;
-      color: var(--slate);
-    }
-    .rules-table td { padding: 12px 16px; border-top: 1px solid var(--lavender-light); color: var(--slate); }
-    .rules-table tr:hover td { background: var(--platinum); }
-
-    /* ===================== IMPORTANT DATES (compact) ===================== */
-    .dates-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
-    }
-    .date-card {
-      background: white; border-radius: 10px; padding: 16px;
-      border: 1px solid var(--lavender-light); text-align: center;
-    }
-    .date-card .date-val {
-      font-family: var(--font-serif); font-size: 1rem; font-weight: 700;
-      color: var(--accent); margin-bottom: 4px;
-    }
-    .date-card .date-label { font-size: 0.8rem; color: var(--slate); }
-
-    /* ===================== FOOTER ===================== */
-    footer {
-      background: var(--carbon); color: rgba(255,255,255,.6);
-      padding: var(--spacing-md) 24px; text-align: center; font-size: 0.82rem;
-    }
-    footer a { color: var(--accent-light); }
-    footer .footer-inner { max-width: var(--max-w); margin: 0 auto; }
-    footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-    footer .footer-links a { color: rgba(255,255,255,.8); text-decoration: none; }
-    footer .footer-links a:hover { color: white; }
-
-    /* ===================== RESPONSIVE ===================== */
-    @media (max-width: 768px) {
-      .nav-links { display: none; position: absolute; top: 56px; left: 0; right: 0; background: white; flex-direction: column; padding: 16px; gap: 4px; border-bottom: 1px solid var(--lavender-main); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-      .nav-links.open { display: flex; }
-      .nav-toggle { display: block; }
-      .tracks-grid { grid-template-columns: 1fr; }
-      .prizes-grid { grid-template-columns: 1fr; }
-      .countdown-item { min-width: 65px; padding: 10px 12px; }
-      .countdown-num { font-size: 1.5rem; }
-    }
-
-    /* ===================== MISC ===================== */
-    .text-center { text-align: center; }
-    .mt-sm { margin-top: var(--spacing-sm); }
-    .mt-md { margin-top: var(--spacing-md); }
-    .mb-sm { margin-bottom: var(--spacing-sm); }
-    .tag-row { display: flex; gap: 8px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
-    .tag {
-      font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 6px;
-      background: rgba(108,92,231,.08); color: var(--accent); border: 1px solid rgba(108,92,231,.12);
-    }
-    .divider { width: 60px; height: 3px; background: var(--lavender-main); margin: 20px auto; border-radius: 2px; }
-
-    /* Anchor offset for fixed nav */
-    section[id] { scroll-margin-top: 72px; }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <!-- ==================== NAVBAR ==================== -->
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href="#" class="navbar-brand"><span>RealPDE</span> Challenge</a>
+    <a href="#" class="navbar-brand">RealPDEChallenge</a>
     <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -350,12 +46,13 @@
 
 <!-- ==================== HERO ==================== -->
 <section class="hero" id="hero">
+  <canvas id="hero-flow"></canvas>
   <div class="hero-inner">
     <div class="hero-badge">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/></svg>
       NeurIPS 2026 Competition
     </div>
-    <h1>RealPDE <span class="accent">Challenge</span></h1>
+    <h1><span data-hero-pde>RealPDE</span> <span class="accent-mid">Challenge</span></h1>
     <p class="hero-sub">
       Scientific ML for Real-world Physical Systems — the first competition evaluating machine learning on paired real-world and simulated physical data.
     </p>
@@ -369,30 +66,23 @@
     </div>
 
     <div class="hero-actions">
-      <a href="#tracks" class="btn btn-primary">Explore Tracks</a>
-      <a href="https://realpdebench.github.io/getting-started/" class="btn btn-outline" target="_blank">Getting Started</a>
+      <a href="#" class="btn btn-primary" target="_blank">Submit on Codabench</a>
       <a href="https://github.com/AI4Science-WestlakeU/RealPDEBench" class="btn btn-outline" target="_blank">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
         GitHub
       </a>
     </div>
 
-    <div class="tag-row">
-      <span class="tag">Scientific ML</span>
-      <span class="tag">Real-world Data</span>
-      <span class="tag">Fluid Dynamics</span>
-      <span class="tag">Sim-to-Real</span>
-      <span class="tag">NACA4418 Airfoil</span>
-    </div>
   </div>
 </section>
 
 <!-- ==================== ABOUT ==================== -->
 <section class="section" id="about">
   <div class="section-inner">
-    <h2 class="section-title">About the Competition</h2>
+    <div class="section-label">About</div>
+    <h2 class="section-title">Bridging the Sim-to-Real Gap<br>for Deployable Scientific ML</h2>
     <p class="section-subtitle">
-      Bridging the gap between simulated and real-world data for deployable Scientific ML.
+      A new competition centered on paired real-world and simulated data, targeting the core capabilities needed for Scientific ML in real physical systems.
     </p>
     <div class="features-grid">
       <div class="feature-card">
@@ -417,13 +107,14 @@
 <!-- ==================== TRACKS ==================== -->
 <section class="section section-alt" id="tracks">
   <div class="section-inner">
-    <h2 class="section-title">Competition Tracks</h2>
-    <p class="section-subtitle">Two independent tracks running simultaneously — participate in one or both.</p>
+    <div class="section-label">Competition Tracks</div>
+    <h2 class="section-title">Two Independent Tracks</h2>
+    <p class="section-subtitle">Running simultaneously — participate in one or both.</p>
     <div class="tracks-grid">
       <!-- Track 1: Sim2Real -->
       <div class="track-card track-card--sim2real">
         <span class="track-tag track-tag--purple">Track 1</span>
-        <h3>Sim-to-Real Transfer Learning (Sim2Real)</h3>
+        <h3>Sim-to-Real Transfer Learning</h3>
         <p>Bridge the gap between simulated and real-world fluid dynamics data for foil systems. Develop models that fuse rich simulated data with noisy, partially-observed real-world measurements.</p>
         <ul>
           <li>Leverage complete modalities from CFD simulations (velocity fields $u, v$ and pressure $p$)</li>
@@ -434,7 +125,7 @@
       <!-- Track 2: LTTTA -->
       <div class="track-card track-card--lttta">
         <span class="track-tag track-tag--mint">Track 2</span>
-        <h3>Long-Term Test-Time Adaptation (LTTTA)</h3>
+        <h3>Long-Term Test-Time Adaptation</h3>
         <p>Tackle long-horizon predictive modeling with continuous online adaptation to streaming real-world observations, mimicking real operational deployment scenarios.</p>
         <ul>
           <li>Iterative N-step autoregressive prediction with real-time observation integration</li>
@@ -449,23 +140,21 @@
 <!-- ==================== DATA ==================== -->
 <section class="section" id="data">
   <div class="section-inner">
-    <h2 class="section-title">Dataset</h2>
+    <div class="section-label">Dataset</div>
+    <h2 class="section-title">NACA4418 Airfoil<br>Paired Real &amp; Simulated Data</h2>
     <p class="section-subtitle">
-      Paired real-world and simulated data centered on the NACA4418 airfoil — a canonical geometry in aerodynamics and hydrodynamics.
+      A canonical geometry in aerodynamics and hydrodynamics — with matched experimental PIV measurements and high-fidelity 3D CFD simulations.
     </p>
     <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--purple">&#x1F30A;</div>
+      <div class="feature-card feature-card--no-icon">
         <h3>Real-World Data (PIV)</h3>
         <p>A 3D airfoil installed in a circulating water tunnel. Cross-sectional velocity fields measured using time-resolved Particle Image Velocimetry with laser-sheet illumination and high-speed cameras.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--mint">&#x1F4BB;</div>
+      <div class="feature-card feature-card--no-icon">
         <h3>Simulated Data (CFD)</h3>
         <p>Matched 3D CFD simulations under identical geometric and operating conditions, providing complete modalities (velocity $u, v$ and pressure $p$) with dense parameter coverage.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon feature-icon--gold">&#x1F4CA;</div>
+      <div class="feature-card feature-card--no-icon">
         <h3>Operating Conditions</h3>
         <p>Angles of attack: 0°, 5°, 10°, 15°, 20°. Reynolds numbers: 2968–17031. Covers diverse operating regimes reflecting real foil-based engineering systems.</p>
       </div>
@@ -476,8 +165,9 @@
 <!-- ==================== METRICS ==================== -->
 <section class="section section-alt" id="metrics">
   <div class="section-inner">
-    <h2 class="section-title">Evaluation Metrics</h2>
-    <p class="section-subtitle">A physics-aware, deployment-oriented evaluation protocol with three dimensions.</p>
+    <div class="section-label">Evaluation</div>
+    <h2 class="section-title">Physics-Aware Metrics</h2>
+    <p class="section-subtitle">A deployment-oriented evaluation protocol with three dimensions: accuracy, efficiency, and safety.</p>
     <div class="metrics-list">
       <div class="metric-item">
         <h4>Turbulent Kinetic Energy (TKE)</h4>
@@ -510,9 +200,10 @@
 <!-- ==================== TIMELINE ==================== -->
 <section class="section" id="timeline">
   <div class="section-inner">
+    <div class="section-label">Schedule</div>
     <h2 class="section-title">Timeline</h2>
     <p class="section-subtitle">19 weeks across three phases, culminating at NeurIPS 2026 in Sydney.</p>
-    <div style="max-width: 600px; margin: 0 auto;">
+    <div style="max-width: 640px;">
       <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-dot"></div>
@@ -564,8 +255,9 @@
 <!-- ==================== PRIZES ==================== -->
 <section class="section section-alt" id="prizes">
   <div class="section-inner">
-    <h2 class="section-title">Prizes</h2>
-    <p class="section-subtitle">Awarded independently per track — compete in both for double the opportunity.</p>
+    <div class="section-label text-center">Rewards</div>
+    <h2 class="section-title text-center">Prizes</h2>
+    <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">Awarded independently per track — compete in both for double the opportunity.</p>
     <div class="prizes-grid">
       <div class="prize-card">
         <div class="prize-medal">&#x1F947;</div>
@@ -586,7 +278,7 @@
         <div class="prize-note">per track</div>
       </div>
     </div>
-    <p style="text-align:center; margin-top: 20px; font-size: 0.88rem; color: var(--slate);">
+    <p style="text-align:center; margin-top: 24px; font-size: 0.9rem; color: var(--slate);">
       Additionally, winning teams will be invited to present at a dedicated webinar and co-author a joint paper summarizing competition results.
     </p>
   </div>
@@ -595,7 +287,8 @@
 <!-- ==================== RULES ==================== -->
 <section class="section" id="rules">
   <div class="section-inner">
-    <h2 class="section-title">Rules &amp; Regulations</h2>
+    <div class="section-label">Regulations</div>
+    <h2 class="section-title">Rules</h2>
     <p class="section-subtitle">Key rules for fair and transparent competition.</p>
     <table class="rules-table">
       <thead>
@@ -618,6 +311,7 @@
 <!-- ==================== RESOURCES ==================== -->
 <section class="section section-alt" id="resources">
   <div class="section-inner">
+    <div class="section-label">Resources</div>
     <h2 class="section-title">Getting Started</h2>
     <p class="section-subtitle">Everything you need to start competing.</p>
     <div class="features-grid">
@@ -637,9 +331,9 @@
         <p>Join our Discord for Q&A, team formation, and technical discussions. Organizers are available throughout the competition. <a href="#">Discord →</a></p>
       </div>
     </div>
-    <div class="text-center mt-md">
+    <div class="mt-md" style="display:flex; gap:1rem; flex-wrap:wrap;">
       <a href="https://realpdebench.github.io" class="btn btn-outline" target="_blank">RealPDEBench Documentation</a>
-      <a href="https://huggingface.co/datasets/AI4Science-WestlakeU/RealPDEBench" class="btn btn-outline" target="_blank" style="margin-left:8px;">Dataset on Hugging Face</a>
+      <a href="https://huggingface.co/datasets/AI4Science-WestlakeU/RealPDEBench" class="btn btn-outline" target="_blank">Dataset on Hugging Face</a>
     </div>
   </div>
 </section>
@@ -647,15 +341,16 @@
 <!-- ==================== ORGANIZERS ==================== -->
 <section class="section" id="organizers">
   <div class="section-inner">
-    <h2 class="section-title">Organizers</h2>
-    <p class="section-subtitle">
+    <div class="section-label text-center">Team</div>
+    <h2 class="section-title text-center">Organizers</h2>
+    <p class="section-subtitle" style="margin-left:auto; margin-right:auto;">
       An interdisciplinary team of experts from top universities spanning AI, fluid dynamics, applied mathematics, and Scientific ML, with 100+ publications in NeurIPS, ICML, ICLR, and leading fluid dynamics journals.
     </p>
     <div class="divider"></div>
-    <p style="text-align:center; font-size:0.88rem; color: var(--slate);">
+    <p style="text-align:center; font-size:0.9rem; color: var(--slate);">
       Organized by the <a href="https://ai4s.lab.westlake.edu.cn/" target="_blank">AI for Scientific Simulation and Discovery Lab</a>, Westlake University, and collaborators.
     </p>
-    <p style="text-align:center; font-size:0.88rem; color: var(--slate); margin-top: 8px;">
+    <p style="text-align:center; font-size:0.9rem; color: var(--slate); margin-top: 8px;">
       Compute infrastructure: 8× A6000 GPUs sponsored by organizers for Codabench evaluation.
     </p>
   </div>
@@ -679,59 +374,8 @@
   </div>
 </footer>
 
-<!-- ==================== SCRIPTS ==================== -->
-<script>
-// Countdown to competition launch: June 15, 2026 00:00 UTC
-(function () {
-  const target = new Date('2026-06-15T00:00:00Z').getTime();
-  function update() {
-    const now = Date.now();
-    let diff = target - now;
-    if (diff <= 0) {
-      document.querySelector('.countdown-target').textContent = 'Competition is live!';
-      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
-        document.getElementById(id).textContent = '0';
-      });
-      return;
-    }
-    const d = Math.floor(diff / 86400000); diff %= 86400000;
-    const h = Math.floor(diff / 3600000);  diff %= 3600000;
-    const m = Math.floor(diff / 60000);    diff %= 60000;
-    const s = Math.floor(diff / 1000);
-    document.getElementById('cd-days').textContent = d;
-    document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
-    document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
-    document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
-  }
-  update();
-  setInterval(update, 1000);
-})();
-
-// Auto-update timeline dots based on current date
-(function () {
-  const dates = [
-    '2026-06-15', '2026-07-19', '2026-09-27',
-    '2026-10-25', '2026-11-10', '2026-11-25', '2026-12-06'
-  ];
-  const dots = document.querySelectorAll('.timeline-dot');
-  const now = new Date();
-  dates.forEach((d, i) => {
-    const dt = new Date(d + 'T23:59:59Z');
-    if (now > dt) {
-      dots[i].classList.add('timeline-dot--done');
-    } else if (i === 0 || now > new Date(dates[i - 1] + 'T23:59:59Z')) {
-      dots[i].classList.add('timeline-dot--active');
-    }
-  });
-})();
-
-// Close mobile nav on link click
-document.querySelectorAll('.nav-links a').forEach(a => {
-  a.addEventListener('click', () => {
-    document.querySelector('.nav-links').classList.remove('open');
-  });
-});
-</script>
+<!-- Scripts -->
+<script src="script.js"></script>
 
 </body>
 </html>
