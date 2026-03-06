@@ -1,0 +1,32 @@
+# Secrets
+.env
+.gemini/.env
+
+# OS
+.DS_Store
+._*
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (if any tooling)
+__pycache__/
+*.pyc
+.venv/
+
+# Node (if any tooling)
+node_modules/
+
+# Build artifacts
+dist/
+site/
+
+# Reference code (large, not for commit)
+ref_codes/
+
+# PDF source (too large for git)
+*.pdf
